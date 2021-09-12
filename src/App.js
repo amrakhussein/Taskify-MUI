@@ -1,6 +1,6 @@
 import React from 'react'
-import ToDoItem from './ToDoItem'
-import todoData from './todoData'
+import ToDoItem from './components/ToDoItem'
+import todoData from './components/todoData'
 
 
 export default class App extends React.Component {
