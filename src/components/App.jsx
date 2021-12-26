@@ -23,8 +23,8 @@ export default function App() {
   const addTodo = (userData) => {
     // console.log('user input:::', userData)
     let todoData = [...todos]
-    
-    let newData = {id: NumberOfTodos + 1,  text: userData, completed: false}
+    let randomId = Math.floor(Math.random() * 9999999999)
+    let newData = {id: randomId + 5,  text: userData, completed: false}
     let newTodo = [...todoData, newData]
     // console.log(todos)
     localStorage.setItem('todoData', JSON.stringify(newTodo))
