@@ -1,7 +1,12 @@
-Simple todo project meant for exploring and discovering different technonlogies & tools...
+Simple todo app using react hooks with data persistent upon page reload (F5) using local storage.. 
+#### App features::
+* add
+* delete
+* mark complete
+* show total number of todos
+* filter out completed todos/tasks..
 
-
-
-### to run the project
-` $ npm install && npm run`
+---
+##### to run the project
+` $ yarn && yarn start`
 
