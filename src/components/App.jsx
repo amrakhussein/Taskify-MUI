@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import TodoItem from './TodoItem'
-import todoData from './todoData'
+import todoData from '../todoData'
 import TodoInput from './TodoInput'
 import Header from './Header'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import './TodoItem.css'
 
-export default function TooItem({ item, handleChange, handleDelete, handleFilter }) {
+export default function TooItem({ item, handleChange, handleDelete }) {
    
     const completedItemStyle = {
         fontStyle: 'italic',
