@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/amromoorie/Taskify/static/js/main.249ffbaf.js",
+    "main.js": "/amromoorie/Taskify/static/js/main.fb145ff5.js",
     "index.html": "/amromoorie/Taskify/index.html",
-    "main.249ffbaf.js.map": "/amromoorie/Taskify/static/js/main.249ffbaf.js.map"
+    "main.fb145ff5.js.map": "/amromoorie/Taskify/static/js/main.fb145ff5.js.map"
   },
   "entrypoints": [
-    "static/js/main.249ffbaf.js"
+    "static/js/main.fb145ff5.js"
   ]
 }
