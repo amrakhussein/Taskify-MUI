@@ -15,12 +15,14 @@
         dark: '#16625f'
       },
       cool: {
-        main: '#D96098'
+        main: '#D96098',
+        dark: '#bf2e71'
       },
       primary: {
         main: '#325288'
       }
-    }
+    },
+ 
     
 }
 export default theme
