@@ -7,7 +7,8 @@ export default function Layout({ children, count }) {
     <>
       <TheHeading count={count} />
 
-      <Container maxWidth='lg'  component="main">
+      <Container maxWidth='lg'  component="main" sx={{
+      }}>
         {children}
       </Container>
     </>

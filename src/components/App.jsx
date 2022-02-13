@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import todoData from '../todoData'
-import TaskListInput from './AppTask/TaskListInput'
 import theme from './AppTheme'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TaskListItem from './AppTask/TaskListItem'
+
 import { Box, Button, Tooltip } from '@mui/material'
 import Layout from './AppLayout/TheLayout'
+import TaskListCardAddNew from './AppTask/TaskListCardAddNew'
+
 export default function App() {
   // TODO
   // useLocalStorage hook
   // validate edge cases like if app were to be deployed in a server context
-  
+
   const localStorageIfany = JSON.parse(localStorage.getItem('todoData'))
   // check if any valid local storage for data persistent
   // initialized with todoData (json) instead [made for initial render/example]
@@ -19,7 +21,8 @@ export default function App() {
   const [todos, setTodos] = useState(initialized)
   const { length: NumberOfTodos } = todos
 
-  const [noEmpty, setNoEmpty] = useState(null)
+  const [noEmpty, setNoEmpty] = useState(true)
+  
 
   const handleChange = (id) => {
     let updatedTodos = todos.map((item) =>
@@ -30,14 +33,20 @@ export default function App() {
     setTodos(updatedTodos)
     //
   }
-  const addTodo = (userData) => {
-    //  TODO
-    // validate userInput useing Regex
-    if (userData === '' || userData === ' ')
-      return setNoEmpty('Add a valuable task!')
-    setNoEmpty(null)
 
-    //
+  const validateInput = (text) => {
+    const { value } = text.target
+    // 
+    if (value === '' || value === ' ' || value === undefined) {
+      setNoEmpty(true)
+    } else {
+      setNoEmpty(false)
+    }
+  }
+
+  const addTodo = (userData) => {
+    
+
     let todoData = [...todos]
     // TODO
     // use lib for handling unique IDs
@@ -64,8 +73,7 @@ export default function App() {
     setTodos(updatedTodos)
   }
 
-
-// indiviual todo tasks
+  // indiviual todo tasks
   const todoItems = todos?.map((item) => (
     <TaskListItem
       task={item}
@@ -77,21 +85,43 @@ export default function App() {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <Layout count={NumberOfTodos}>
-        <TaskListInput noEmpty={noEmpty}  addTodo={addTodo} />
-        <Box sx={{ maxHeight: '30rem',  }}>{todoItems}</Box>
-        <Tooltip disableFocusListener disableTouchListener title="Your checked tasks will be deleted when you press this button!">
+      <Layout count={NumberOfTodos} >
+        <TaskListCardAddNew
+          noEmpty={noEmpty}
+          setNoEmpty={setNoEmpty}
+          addTask={addTodo}
+          validateInput={validateInput}
+        />
+        <Box sx={{  height:'80%', }}>{todoItems}</Box>
 
-        <Button
-          variant="contained"
-          disabled={NumberOfTodos === 0 ? true : false}
-          sx={{ m: { xs: 4, sm: 4 }, mr: { xs: 0.3, }, float: 'right' }}
-          onClick={handleFilter}
+        </Layout>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', bgcolor:'green',  }}>
+        <Tooltip
+          disableFocusListener
+          disableTouchListener
+          title="Your checked tasks will be deleted when you press this button!"
+        >
+          <Button
+            variant="outlined"
+            disabled={NumberOfTodos === 0 ? true : false}
+            sx={{
+          
+              p: { xs: 2, sm: 4 },
+              position: 'fixed',
+              width: {xs:'20rem',sm:'20rem'},
+              height: {xs:'2.4rem', sm:'0.8rem'},
+              bottom: 8,
+              right: 20,
+              textTransform: 'uppercase',
+              fontSize: '1.2rem',
+            }}
+            onClick={handleFilter}
           >
-          Clear accomplished!
-        </Button>
-          </Tooltip>
-      </Layout>
+            Clear accomplished!
+          </Button>
+        </Tooltip>
+            </Box>
     </ThemeProvider>
   )
 }
