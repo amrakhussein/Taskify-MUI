@@ -1,44 +1,24 @@
-import React, { useState } from 'react'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import {  Typography } from '@mui/material'
-
-
-export default function TaskListCardInputBody({
-  input,
- handleInput,
-  noEmpty: checkEmptyTextMessage,
-}) {
-
+export default function TaskListCardInput({ inputValues, handleChange }) {
 
   return (
     <>
-    
+      <input
+        type="text"
+        value={inputValues.title}
+        name="title"
+        placeholder="Add Title"
+        onChange={handleChange}
+        sx={{}}
+      />
 
-
-        <TextField
-          id="filled-basic"
-          label="Add Task"
-          variant="filled"
-          fullWidth
-          size="small"
-          value={input}
-          onChange={(evt) => handleInput(evt)}
-          sx={{
-            flexShrink: 0,
-            width: { xs: '100%', sm: '60%' },
-            input: {
-              '&:focus': {
-                color: 'GrayText',
-                fontStyle: 'italic',
-                fontWeight: '400',
-              },
-            },
-          }}
-        />
-
-   
-     
+      <input
+        type="text"
+        value={inputValues.content}
+        name="content"
+        placeholder="Add Details..."
+        onChange={handleChange}
+        sx={{}}
+      />
     </>
   )
 }

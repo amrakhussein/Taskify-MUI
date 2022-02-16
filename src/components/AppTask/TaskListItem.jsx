@@ -1,35 +1,32 @@
-import React from 'react'
-import { Checkbox, Grid, Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined'
+import { Box, Checkbox, } from '@mantine/core'
 
 export default function TaskListItem({ task, handleChange, handleDelete }) {
+  console.log('task: ', task);
   return (
     <>
       <Box
         sx={{
+          display:'flex',
+          flexDirection: 'row',
+          justifyContent:'center',
+          alignItems:'center',
           flexGrow: 1,
         }}
       >
-        <Grid
-          container
-          spacing={0}
-          alignItems="center"
-          justifyContent="center"
-          // color="grey"
+        <Box
           sx={{
-            bgcolor: 'background.paper',
-            my: 5,
-            py: 3,
+            background: 'lightblue',
+            margin:'1rem 0',
+            padding: '1rem 0.4rem',
             px: { xs: 1, md: 2 },
             boxShadow: '0.1rem 0.2rem rgba(0, 0, 0, 0.1)',
           }}
         >
-          <Grid item xs={8}>
-            <Typography sx={{ color: 'text.main' }}>{task.text}</Typography>
-          </Grid>
-
-          <Grid
+          <pre>
+            {JSON.stringify(task,null ,2)}
+          </pre>
+          
+          <div
             item
             xs={4}
             sx={{
@@ -42,25 +39,20 @@ export default function TaskListItem({ task, handleChange, handleDelete }) {
               checked={task.completed}
               onChange={() => handleChange(task.id)}
               sx={{
-                color: 'cool.main',
-                '&.Mui-checked': {
-                  opacity: '77%',
-                  color: 'cool.main',
-                  '& .MuiSvgIcon-root': { fontSize: { xs: 22, md: 28 } },
-                },
+                
               }}
             />
 
-            <HighlightOffOutlinedIcon
+            <i
               sx={{
                 color: 'cool.dark',
                 fontSize: { xs: '1.5rem', md: '1.7rem' },
                 cursor: 'pointer',
               }}
               onClick={() => handleDelete(task.id)}
-            ></HighlightOffOutlinedIcon>
-          </Grid>
-        </Grid>
+            ></i>
+          </div>
+        </Box>
       </Box>
     </>
   )

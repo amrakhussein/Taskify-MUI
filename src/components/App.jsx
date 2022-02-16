@@ -1,75 +1,75 @@
-import React, { useState } from 'react'
-import todoData from '../todoData'
-import theme from './AppTheme'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useState } from 'react'
+import taskData from '../todoData'
 import TaskListItem from './AppTask/TaskListItem'
 
-import { Box, Button, Tooltip } from '@mui/material'
 import Layout from './AppLayout/TheLayout'
 import TaskListCardAddNew from './AppTask/TaskListCardAddNew'
+import { Box } from '@mantine/core'
 
 export default function App() {
   // TODO
   // useLocalStorage hook
   // validate edge cases like if app were to be deployed in a server context
 
-  const localStorageIfany = JSON.parse(localStorage.getItem('todoData'))
+  const localStorageIfany = JSON.parse(localStorage.getItem('taskData'))
   // check if any valid local storage for data persistent
-  // initialized with todoData (json) instead [made for initial render/example]
-  const initialized = localStorageIfany ? localStorageIfany : todoData
+  // initialized with taskData (json) instead [made for initial render/example]
+  const initialized = localStorageIfany ? localStorageIfany : taskData
 
   const [todos, setTodos] = useState(initialized)
+  console.log('todos: ', todos);
   const { length: NumberOfTodos } = todos
 
-  const [noEmpty, setNoEmpty] = useState(true)
-  
 
-  const handleChange = (id) => {
+
+  const handleToggleComplete = (id) => {
     let updatedTodos = todos.map((item) =>
       item.id === id ? { ...item, completed: !item.completed } : { ...item }
     )
-    localStorage.setItem('todoData', JSON.stringify(updatedTodos))
-    updatedTodos = JSON.parse(localStorage.getItem('todoData'))
+    localStorage.setItem('taskData', JSON.stringify(updatedTodos))
+    updatedTodos = JSON.parse(localStorage.getItem('taskData'))
     setTodos(updatedTodos)
     //
   }
 
-  const validateInput = (text) => {
-    const { value } = text.target
-    // 
-    if (value === '' || value === ' ' || value === undefined) {
-      setNoEmpty(true)
-    } else {
-      setNoEmpty(false)
-    }
-  }
+  //   const { value } = text.target
+  //   // 
+  //   if (value === '' || value === ' ' || value === undefined) {
+  //     setNoEmpty(true)
+  //   } else {
+  //     setNoEmpty(false)
+  //   }
+  // }
 
-  const addTodo = (userData) => {
+  const addTask = (title, body) => {
+    console.log('title, body: ', title, body);
     
 
-    let todoData = [...todos]
+    let taskData = [...todos]
+    console.log('taskData: ', taskData);
     // TODO
     // use lib for handling unique IDs
-    let randomId = Date.now()
-    let newData = { id: randomId, text: userData, completed: false }
-    let newTodo = [...todoData, newData]
+    let {id: lastId} = taskData[taskData.length - 1]
+    let newId = lastId + 1 
+    let newTask = { id: newId, title: title, content: body, completed: false, date: new Date() }
+    let updatedTaskData = [ ...taskData, newTask]
     //
-    localStorage.setItem('todoData', JSON.stringify(newTodo))
-    newTodo = JSON.parse(localStorage.getItem('todoData'))
+    localStorage.setItem('taskData', JSON.stringify(updatedTaskData))
+    updatedTaskData = JSON.parse(localStorage.getItem('taskData'))
     //
-    setTodos(newTodo)
+    setTodos(updatedTaskData)
   }
 
   const handleFilter = () => {
     let filteredCompleted = () => todos.filter((i) => !i.completed)
-    localStorage.setItem('todoData', JSON.stringify(filteredCompleted()))
-    let filteredCompletedd = JSON.parse(localStorage.getItem('todoData'))
+    localStorage.setItem('taskData', JSON.stringify(filteredCompleted()))
+    let filteredCompletedd = JSON.parse(localStorage.getItem('taskData'))
     setTodos(filteredCompletedd)
   }
   const handleDelete = (id) => {
     let updatedTodos = todos.filter((item) => item.id !== id)
-    localStorage.setItem('todoData', JSON.stringify(updatedTodos))
-    updatedTodos = JSON.parse(localStorage.getItem('todoData'))
+    localStorage.setItem('taskData', JSON.stringify(updatedTodos))
+    updatedTodos = JSON.parse(localStorage.getItem('taskData'))
     setTodos(updatedTodos)
   }
 
@@ -77,36 +77,28 @@ export default function App() {
   const todoItems = todos?.map((item) => (
     <TaskListItem
       task={item}
-      handleChange={handleChange}
+      handleToggle={handleToggleComplete}
       handleDelete={handleDelete}
     />
   ))
-  const appTheme = createTheme(theme)
 
   return (
-    <ThemeProvider theme={appTheme}>
+    <>
+    
       <Layout count={NumberOfTodos} >
         <TaskListCardAddNew
-          noEmpty={noEmpty}
-          setNoEmpty={setNoEmpty}
-          addTask={addTodo}
-          validateInput={validateInput}
+      
+          addTask={addTask}
         />
-        <Box sx={{  height:'80%', }}>{todoItems}</Box>
+        <Box sx={{  }}>{todoItems}</Box>
 
         </Layout>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', bgcolor:'green',  }}>
-        <Tooltip
-          disableFocusListener
-          disableTouchListener
-          title="Your checked tasks will be deleted when you press this button!"
-        >
-          <Button
-            variant="outlined"
+      <Box >
+          <button
             disabled={NumberOfTodos === 0 ? true : false}
             sx={{
-          
+              
               p: { xs: 2, sm: 4 },
               position: 'fixed',
               width: {xs:'20rem',sm:'20rem'},
@@ -117,11 +109,13 @@ export default function App() {
               fontSize: '1.2rem',
             }}
             onClick={handleFilter}
-          >
+            >
             Clear accomplished!
-          </Button>
-        </Tooltip>
+          </button>
             </Box>
-    </ThemeProvider>
+            </>
   )
 }
+
+
+// Your checked tasks will be deleted when you press this button!
